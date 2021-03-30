@@ -4,9 +4,13 @@ import router from './router'
 import store from './store'
 
 Vue.config.productionTip = false
+Vue.prototype.$Bus = new Vue()
 
 new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+
+require('@/assets/css/base.css')
+require('@/assets/css/normalize.css')
