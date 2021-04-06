@@ -9,14 +9,14 @@ export function request(config){
 
   //拦截请求
   instance1.interceptors.request.use(request =>{
-    console.log(request);
+    //console.log(request);
     return request
   },error => {
     console.log(error);
   })
   //拦截请求数据返回值
   instance1.interceptors.response.use(res =>{
-    console.log(res);
+    //console.log(res);
     return res.data
   },error => {
     console.log(error);

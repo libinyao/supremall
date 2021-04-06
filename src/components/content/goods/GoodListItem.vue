@@ -1,6 +1,6 @@
 <template>
-  <div class="good-item">
-    <img :src="goodsItem.show.img" alt="" @load="goodsItemImageLoaded">
+  <div class="good-item" @click="itemClick">
+    <img :src="showImage" alt="" @load="goodsItemImageLoaded">
     <h2></h2>
     <div class="good-info">
       <p>{{goodsItem.title}}</p>
@@ -21,10 +21,23 @@ export default {
       }
     }
   },
+  computed: {
+    showImage() {
+      return this.goodsItem.image || this.goodsItem.show.img
+    }
+  },
   methods: {
     goodsItemImageLoaded() {
-      const message = '图片加载完毕'
-      this.$Bus.$emit('goodsItemImageLoaded',message)
+      if (this.$route.path.indexOf('/home')) {
+        const message = '首页图片加载完毕'
+        this.$Bus.$emit('home-goodsItemImageLoaded',message)
+      } else if (this.$route.path.indexOf('/recommend')) {
+        const message = '详情页图片加载完毕'
+        this.$Bus.$emit('detail-goodsItemImageLoaded',message)
+      }
+    },
+    itemClick() {
+      this.$router.push('/detail/'+this.goodsItem.iid)
     }
   }
 }

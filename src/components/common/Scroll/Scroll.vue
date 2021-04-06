@@ -31,8 +31,8 @@ export default {
       probeType: this.probeType,
       pullUpLoad: true,
       mouseWheel: true,
-      //observeDOM: true,
-      //observeImage: true
+      observeDOM: true,
+      observeImage: true
     })
     this.scroll.on('scroll',position =>{
       this.$emit('scroll',position)
