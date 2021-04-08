@@ -1,7 +1,8 @@
 <template>
   <div id="detail">
-    <detail-navbar class="detail-navbar" @titleClick="titleClick"/>
-    <scroll class="content" ref="scroll">
+    <detail-navbar class="detail-navbar" @titleClick="titleClick" ref="detailNavBar"/>
+    <scroll class="content" ref="scroll"
+            :probe-type="3" @scroll="titleScroll">
       <detail-swiper :top-image="topImage"/>
       <detail-base-info :goods="goods"/>
       <detail-shop-info :shop="shop"/>
@@ -54,7 +55,8 @@ export default {
       commentInfo: {},
       recommends: [],
       themeTopYs: [],
-      getThemeTopY: null
+      getThemeTopY: null,
+      currentIndex: 0
     }
   },
   created() {
@@ -131,6 +133,17 @@ export default {
     },
     titleClick(index) {
       this.$refs.scroll.scrollTo(0,-this.themeTopYs[index],200)
+    },
+    titleScroll(position){
+      const positionY =  -position.y
+      let length = this.themeTopYs.length
+      for(let i = 0; i<length; i++ ) {
+        if(this.currentIndex !== i &&((i<length-1 && positionY >= this.themeTopYs[i])||
+          (i === length-1 && positionY > this.themeTopYs[i]))){
+          this.currentIndex = i
+          this.$refs.detailNavBar.currentIndex = this.currentIndex
+        }
+      }
     }
   }
 }
